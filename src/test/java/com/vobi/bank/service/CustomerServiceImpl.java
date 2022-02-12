@@ -15,8 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.vobi.bank.domain.Customer;
 import com.vobi.bank.repository.CustomerRepository;
-@Service
 
+@Service
 public class CustomerServiceImpl implements CustomerService {
 	
 	@Autowired
@@ -44,7 +44,7 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	@Transactional(readOnly = false,propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	@Transactional(readOnly = false,propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
 	public Customer save(Customer entity) throws Exception {
 		if(entity==null) {
 			throw new Exception("El customer es nulo");
@@ -53,14 +53,14 @@ public class CustomerServiceImpl implements CustomerService {
 		validate(entity);
 		
 		if(customerRepository.existsById(entity.getCustId())) {
-			throw new Exception("El cliente ya existe");
+			throw new Exception("El customer ya existe");
 		}
 		
 		return customerRepository.save(entity);
 	}
 
 	@Override
-	@Transactional(readOnly = false,propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	@Transactional(readOnly = false,propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
 	public Customer update(Customer entity) throws Exception {
 		if(entity==null) {
 			throw new Exception("El customer es nulo");
@@ -76,8 +76,9 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	@Transactional(readOnly = false,propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	@Transactional(readOnly = false,propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
 	public void delete(Customer entity) throws Exception {
+		
 		if(entity==null) {
 			throw new Exception("El customer es nulo");
 		}
@@ -115,7 +116,6 @@ public class CustomerServiceImpl implements CustomerService {
 		}
 		
 		delete(customerRepository.findById(id).get());	
-		
 	}
 
 	@Override
@@ -124,7 +124,8 @@ public class CustomerServiceImpl implements CustomerService {
 		if(constraintViolations.isEmpty()==false) {
 			throw new ConstraintViolationException(constraintViolations);
 		}		
-		
 	}
+
+	
 
 }
